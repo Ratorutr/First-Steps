@@ -21,30 +21,36 @@ SMODS.Atlas {
 SMODS.Joker {
   key = 'Chiptune',
   loc_txt = {
-    name = '{C:chips}Chip{}tune',
+    name = 'Chiptune',
     text = {
       "{C:chips}#1#{} Chips",
       "{C:inactive}(Adds {C:chips}#2#{C:inactive} Chips for every played hand)"
     }
   },
-  config = { extra = { chips = 0, chip_gain = 5 } },
+  config = { extra = { chips = 0, chip_gain = 5, money = 1 } },
   rarity = 1,
   atlas = 'FSOmega',
   pos = { x = 0, y = 0 },
   cost = 4,
   loc_vars = function(self, info_queue, card)
-    return { vars = { card.ability.extra.chips, card.ability.extra.chip_gain } }
+    return { vars = { card.ability.extra.chips, card.ability.extra.chip_gain, card.ability.extra.money } }
   end,
+      
+  calc_dollar_bonus = function(self, card)
+      local bonus = card.ability.extra.money
+      if bonus > 0 then return bonus end
+  end,
+  
   calculate = function(self, card, context)
     if context.joker_main then
       return {
         chip_mod = card.ability.extra.chips,
-        message = localize { type = 'variable', key = 'a_chips', vars = { card.ability.extra.chips } }
+        message = localize { type = 'variable', key = 'a_chips', vars = { card.ability.extra.chips } },
       }
     end
 
     if context.before and not context.blueprint then
-      card.ability.extra.chips = card.ability.extra.chips + card.ability.extra.chip_gain
+      card.ability.extra.chips = card.ability.extra.chips + card.ability.extra.chip_gain;
       return {
         message = 'Upgraded!',
         colour = G.C.CHIPS,
@@ -55,7 +61,7 @@ SMODS.Joker {
 }
 
 SMODS.Joker {
-  key = '{C:mult}Mult{}ifunction',
+  key = 'Multifunction',
   loc_txt = {
     name = 'Multifunction',
     text = {
