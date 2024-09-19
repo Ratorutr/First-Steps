@@ -21,7 +21,7 @@ SMODS.Atlas {
 SMODS.Joker {
   key = 'Chiptune',
   loc_txt = {
-    name = 'Chiptune',
+    name = '{C:chips}Chip{}tune',
     text = {
       "{C:chips}#1#{} Chips",
       "{C:inactive}(Adds {C:chips}#2#{C:inactive} Chips for every played hand)"
@@ -48,6 +48,42 @@ SMODS.Joker {
       return {
         message = 'Upgraded!',
         colour = G.C.CHIPS,
+        card = card
+      }
+    end
+  end
+}
+
+SMODS.Joker {
+  key = '{C:mult}Mult{}ifunction',
+  loc_txt = {
+    name = 'Multifunction',
+    text = {
+      "{C:mult}#1#{} Mult",
+      "{C:inactive}(Adds {C:mult}#2#{C:inactive} Chips for every played hand)"
+    }
+  },
+  config = { extra = { mult = -2, mult_gain = 1 } },
+  rarity = 1,
+  atlas = 'FSOmega',
+  pos = { x = 1, y = 0 },
+  cost = 4,
+  loc_vars = function(self, info_queue, card)
+    return { vars = { card.ability.extra.mult, card.ability.extra.mult_gain } }
+  end,
+  calculate = function(self, card, context)
+    if context.joker_main then
+      return {
+        mult_mod = card.ability.extra.mult,
+        message = localize { type = 'variable', key = 'a_mult', vars = { card.ability.extra.mult } }
+      }
+    end
+
+    if context.before and not context.blueprint then
+      card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.mult_gain
+      return {
+        message = 'Upgraded!',
+        colour = G.C.MULT,
         card = card
       }
     end
