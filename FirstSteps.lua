@@ -1,6 +1,6 @@
 --- STEAMODDED HEADER
---- MOD_NAME: FSomega
---- MOD_ID: FSOmega
+--- MOD_NAME: FirstSteps
+--- MOD_ID: FirstSteps
 --- MOD_AUTHOR: [TESLA]
 --- MOD_DESCRIPTION: My first attempt at Balatro modding
 --- DEPENDENCIES: [Steamodded>=1.0.0~ALPHA-0812d]
@@ -23,8 +23,8 @@ SMODS.Joker {
   loc_txt = {
     name = 'Chiptune',
     text = {
-      "{C:chips}#2#{} Chips",
-      "{C:inactive}(Currently {C:chips}+#1#{C:inactive} Chips for every hand)"
+      "{C:chips}#1#{} Chips",
+      "{C:inactive}(Adds {C:chips}#2#{C:inactive} Chips for every played hand)"
     }
   },
   config = { extra = { chips = 0, chip_gain = 5 } },
